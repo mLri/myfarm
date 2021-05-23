@@ -41,6 +41,12 @@ module.exports.addVegetable = async (req, res) => {
     const { plot_id } = req.params
 
     const plot = await vegetable_plot.findOne({ _id: plot_id })
+    if (!plot) throw statusError.bad_request_with_message('Not found this plot!')
+
+    if (!plot.vgs) plot.vgs = []
+
+    const dup_vg = plot.vgs.find( value => String(value.vg_id) === String(vegetable_id))
+    if (dup_vg) throw statusError.bad_request_with_message(`Duplicate data vegetable_id ${vegetable_id}!`)
 
     plot.vgs.push({ vg_id: vegetable_id })
     await plot.save()

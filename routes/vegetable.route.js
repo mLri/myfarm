@@ -5,21 +5,17 @@ const { validateSchema, validateSchemaType, handleErrorValidate } = require('../
 const { userSchema } = require('../validation/schema/user.schema')
 
 /* include controllers */
-const vegetable_plot_controller = require('../controllers/vegetable_plot.controller')
+const vegetable_controller = require('../controllers/vegetable.controller')
 
 /* include helper */
 const { checkAuth } = require('../helpers/token.helper')
 
-router.get('/',
-  checkAuth,
-  vegetable_plot_controller.getPlots)
-
 router.post('/',
   checkAuth,
-  vegetable_plot_controller.createPlot)
+  vegetable_controller.createVegetable)
 
-router.patch('/:plot_id/vegetable',
+router.get('/',
   checkAuth,
-  vegetable_plot_controller.addVegetable)
+  vegetable_controller.getVegetables)
 
 module.exports = router
